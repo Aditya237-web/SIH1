@@ -1,0 +1,168 @@
+/* Root Theme */
+:root {
+  font-family: 'Noto Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #002147;
+  background-color: #f5f5f5;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Typography */
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
+  color: #002147;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Header */
+header {
+  background-color: #002147;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-link {
+  color: #FF9933;
+  font-weight: bold;
+  text-decoration: none;
+  border: 1px solid #FF9933;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-link:hover {
+  background-color: #FF9933;
+  color: white;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+#search-bar {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#mic-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+button {
+  padding: 0.75rem 1rem;
+  background-color: #228B22;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #1e7e1e;
+}
+
+/* Map Section */
+.map-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#map {
+  flex: 1;
+  width: 100vw;
+  height: calc(100vh - 200px); /* adjust based on header + footer height */
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Bus Info */
+.bus-info {
+  padding: 2rem;
+}
+
+.bus-card {
+  background-color: white;
+  padding: 1rem;
+  border-left: 5px solid #228B22;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.count {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* Footer */
+footer {
+  background-color: #002147;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive Layout */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
