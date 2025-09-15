@@ -66,7 +66,7 @@ function MainDashboard() {
       return;
     }
 
-    fetch(`http://localhost:5000/api/buses-near/${cityToQuery}`)
+    fetch(`${process.env.REACT_APP_API_BASE}/api/buses-near/${cityToQuery}`))
       .then(res => res.json())
       .then(data => setBusData(data))
       .catch(err => {
