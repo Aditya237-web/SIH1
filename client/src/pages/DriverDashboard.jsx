@@ -30,7 +30,7 @@ function DriverDashboard() {
             setLocation({ lat: latitude, lng: longitude });
             setStatus(`📍 Location updated: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
 
-            fetch('http://localhost:5000/api/location', {
+            fetch(`${process.env.REACT_APP_API_BASE}/api/location`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -41,7 +41,13 @@ function DriverDashboard() {
                 longitude,
                 timestamp: new Date().toISOString()
               })
-            });
+            })
+              .then(res => res.json())
+              .then(data => console.log('✅ Location sent:', data))
+              .catch(err => {
+                console.error('❌ Failed to send location:', err);
+                setStatus('⚠️ Failed to send location to server');
+              });
           },
           () => {
             setStatus('⚠️ Location access denied');
