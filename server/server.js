@@ -1,5 +1,3 @@
-// server/server.js
-
 const express = require('express');
 const cors = require('cors');
 const { generateNearbyBuses } = require('./utils/busGenerator');
@@ -10,6 +8,16 @@ app.use(express.json());
 
 // In-memory store for driver locations
 let latestLocation = {};
+
+// Root route for Render health check
+app.get('/', (req, res) => {
+  res.send('✅ SmartBus Bharat backend is live');
+});
+
+// Health check route
+app.get('/ping', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 /**
  * POST /api/driver/login
@@ -81,6 +89,12 @@ app.get('/api/buses-near/:city', (req, res) => {
     console.error('❌ Error in /api/buses-near:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
+});
+
+// Fallback error handler
+app.use((err, req, res, next) => {
+  console.error('🔥 Uncaught error:', err);
+  res.status(500).json({ message: 'Unexpected server error' });
 });
 
 // Start server
