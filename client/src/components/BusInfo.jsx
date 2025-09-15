@@ -1,49 +1,92 @@
-import React, { useState, useEffect } from 'react';
+// src/components/BusInfo.jsx
 
-function BusInfo() {
-  const [busData, setBusData] = useState({
-    number: '102',
-    location: 'Near Gandhi Chowk',
-    passengers: 32,
-    capacity: 50
-  });
+import React from 'react';
 
-  useEffect(() => {
-    // Simulate live updates every 5 seconds
-    const interval = setInterval(() => {
-      const newPassengerCount = Math.floor(25 + Math.random() * 25); // 25–50
-      const locations = ['Near Gandhi Chowk', 'Shahpur', 'Ludhiana', 'Palhwan', 'Sector 12'];
-      const newLocation = locations[Math.floor(Math.random() * locations.length)];
-
-      setBusData(prev => ({
-        ...prev,
-        location: newLocation,
-        passengers: newPassengerCount
-      }));
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
+export default function BusInfo({ buses, onPurchase }) {
+  const hasBuses = Array.isArray(buses) && buses.length > 0;
 
   return (
     <section style={{ padding: '2rem 0' }}>
       <h2>Live Bus Info</h2>
-      <div style={{
-        backgroundColor: '#fff',
-        padding: '1rem',
-        borderLeft: '5px solid #228B22',
-        marginBottom: '1rem',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        borderRadius: '4px'
-      }}>
-        <p><strong>Bus #: {busData.number}</strong></p>
-        <p>Location: {busData.location}</p>
-        <p>Passenger Count: <span style={{ fontWeight: 'bold', color: '#d32f2f' }}>
-          {busData.passengers}/{busData.capacity}
-        </span></p>
-      </div>
+
+      {!hasBuses && (
+        <div
+          style={{
+            backgroundColor: '#fff',
+            padding: '1rem',
+            borderLeft: '5px solid #ccc',
+            color: '#666',
+            borderRadius: '4px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}
+        >
+          No live buses in this city right now.
+        </div>
+      )}
+
+      {hasBuses &&
+        buses.map((bus) => (
+          <div
+            key={bus.busId}
+            style={{
+              position: 'relative',
+              backgroundColor: '#fff',
+              padding: '1rem',
+              borderLeft: '5px solid #228B22',
+              marginBottom: '1rem',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              borderRadius: '4px',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
+            {/* Bus Type Badge in the top-right corner */}
+            <span
+              style={{
+                position: 'absolute',
+                top: '0.75rem',
+                right: '0.75rem',
+                padding: '0.25rem 0.5rem',
+                backgroundColor: '#eee',
+                borderRadius: '3px',
+                fontSize: '0.75rem',
+                color: '#333'
+              }}
+            >
+              {bus.busType}
+            </span>
+
+            <p>
+              <strong>Bus ID:</strong> {bus.busId}
+            </p>
+            <p>
+              <strong>Route:</strong> {bus.route}
+            </p>
+            <p>
+              <strong>Status:</strong> {bus.status} &nbsp;|&nbsp;
+              <strong>Crowd:</strong> {bus.crowdLevel} &nbsp;|&nbsp;
+              <strong>ETA:</strong> {bus.eta}
+            </p>
+
+            {/* Purchase Ticket Button */}
+            <button
+              onClick={() => onPurchase(bus.busId)}
+              style={{
+                marginTop: '1rem',
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                color: '#fff',
+                backgroundColor: '#007BFF',
+                border: 'none',
+                borderRadius: '4px',
+                alignSelf: 'flex-end',
+                cursor: 'pointer'
+              }}
+            >
+              Purchase Ticket
+            </button>
+          </div>
+        ))}
     </section>
   );
 }
-
-export default BusInfo;

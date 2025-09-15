@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 function Header() {
   return (
     <header style={{
+      position: 'sticky',
+      top: 0,
+      zIndex: 1000,
       backgroundColor: '#002147',
       color: 'white',
       padding: '1rem 2rem',
@@ -11,9 +14,54 @@ function Header() {
       justifyContent: 'space-between',
       alignItems: 'center'
     }}>
-      <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>🚌 SmartBus Bharat</div>
+      <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>🚌ChaldiBus</div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+        {/* Admin Login */}
+        <Link to="/admin" style={{
+          color: 'white',
+          textDecoration: 'none',
+          fontWeight: '500',
+          fontSize: '1rem'
+        }}>
+          Admin Login
+        </Link>
+
+        {/* Driver Panel */}
+        <a
+          href="/driver"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontWeight: '500',
+            fontSize: '1rem'
+          }}
+        >
+          Driver Panel
+        </a>
+
+        {/* Ticket Booking */}
+        <Link to="/ticket" style={{
+          color: 'white',
+          textDecoration: 'none',
+          fontWeight: '500',
+          fontSize: '1rem'
+        }}>
+          Ticket Booking
+        </Link>
+
+        {/* Help & Support */}
+        <Link to="/help" style={{
+          color: 'white',
+          textDecoration: 'none',
+          fontWeight: '500',
+          fontSize: '1rem'
+        }}>
+          Help & Support
+        </Link>
+
         {/* Language Selector */}
         <select onChange={(e) => alert(`Language switched to: ${e.target.value}`)}>
           <option value="en">English</option>
@@ -28,35 +76,6 @@ function Header() {
           <option value="pa">ਪੰਜਾਬੀ</option>
           <option value="ur">اردو</option>
         </select>
-
-        {/* Admin Login */}
-        <Link to="/admin" style={{
-          color: '#FF9933',
-          fontWeight: 'bold',
-          textDecoration: 'none',
-          border: '1px solid #FF9933',
-          padding: '0.4rem 0.8rem',
-          borderRadius: '4px'
-        }}>
-          🔐 Admin Login
-        </Link>
-
-        {/* Driver Panel - opens in new tab */}
-        <a
-          href="/driver"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            color: '#00BFFF',
-            fontWeight: 'bold',
-            textDecoration: 'none',
-            border: '1px solid #00BFFF',
-            padding: '0.4rem 0.8rem',
-            borderRadius: '4px'
-          }}
-        >
-          🚍 Driver Panel
-        </a>
       </div>
     </header>
   );

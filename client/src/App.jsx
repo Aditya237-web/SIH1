@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import DriverLogin from './pages/DriverLogin';
 import DriverDashboard from './pages/DriverDashboard';
 import TicketForm from './pages/TicketForm';
+import BookTicket from './pages/BookTicket'; // ✅ Added this
 
 import 'leaflet/dist/leaflet.css';
 
@@ -23,6 +24,7 @@ function App() {
           {/* 🏠 Public routes */}
           <Route path="/" element={<MainDashboard />} />
           <Route path="/ticket" element={<TicketForm />} />
+          <Route path="/book-ticket/:busId" element={<BookTicket />} /> {/* ✅ Added route */}
 
           {/* 🔐 Admin routes */}
           <Route path="/login" element={<Login />} />

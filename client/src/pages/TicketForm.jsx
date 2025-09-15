@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { CityContext } from '../App';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const cities = ['Modinagar', 'Meerut', 'Saharanpur', 'Ghaziabad', 'Aligarh'];
@@ -46,6 +47,8 @@ function TicketForm() {
       minHeight: '100vh',
       backgroundColor: '#f5f5f5'
     }}>
+      <Header />
+
       <main style={{
         flex: '1',
         maxWidth: '700px',
