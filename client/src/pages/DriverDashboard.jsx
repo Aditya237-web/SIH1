@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 function DriverDashboard() {
   const [location, setLocation] = useState({ lat: null, lng: null });
@@ -66,7 +67,14 @@ function DriverDashboard() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#e9edf5' }}>
       <Header />
 
-      <main style={{ flex: '1', width: '100%', padding: '2rem 4rem', fontFamily: 'Noto Sans, sans-serif' }}>
+      <main style={{
+        flex: '1',
+        width: '100%',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '2rem 1rem',
+        fontFamily: 'Noto Sans, sans-serif'
+      }}>
         <h1 style={{ color: '#002147', fontSize: '2rem', marginBottom: '1rem' }}>🧑‍✈️ Driver Dashboard</h1>
 
         {session ? (
@@ -93,17 +101,19 @@ function DriverDashboard() {
             }}>
               <h3 style={{ color: '#333', marginBottom: '1rem' }}>Live Location Map</h3>
               {location.lat && location.lng ? (
-                <MapContainer center={[location.lat, location.lng]} zoom={15} style={{ height: '400px', width: '100%' }}>
-                  <TileLayer
-                    attribution='&copy; OpenStreetMap contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  <Marker position={[location.lat, location.lng]}>
-                    <Popup>
-                      {session.busId} on {session.route}
-                    </Popup>
-                  </Marker>
-                </MapContainer>
+                <div style={{ width: '100%', overflow: 'hidden', borderRadius: '8px' }}>
+                  <MapContainer center={[location.lat, location.lng]} zoom={15} style={{ height: '400px', width: '100%' }}>
+                    <TileLayer
+                      attribution='&copy; OpenStreetMap contributors'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[location.lat, location.lng]}>
+                      <Popup>
+                        {session.busId} on {session.route}
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
+                </div>
               ) : (
                 <div style={{ color: '#555' }}>Waiting for location...</div>
               )}
