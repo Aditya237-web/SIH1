@@ -1,13 +1,13 @@
 import React, { useState, createContext } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import MainDashboard from './pages/MainDashboard';
 import AdminPanel from './pages/AdminPanel';
-import Login from './pages/Login';
+// import Login from './pages/Login'; // 🔒 Disabled for now
 import DriverLogin from './pages/DriverLogin';
 import DriverDashboard from './pages/DriverDashboard';
 import TicketForm from './pages/TicketForm';
-import BookTicket from './pages/BookTicket'; // ✅ Added this
+import BookTicket from './pages/BookTicket';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -15,7 +15,6 @@ export const CityContext = createContext();
 
 function App() {
   const [selectedCity, setSelectedCity] = useState('');
-  const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
   return (
     <CityContext.Provider value={{ selectedCity, setSelectedCity }}>
@@ -24,14 +23,10 @@ function App() {
           {/* 🏠 Public routes */}
           <Route path="/" element={<MainDashboard />} />
           <Route path="/ticket" element={<TicketForm />} />
-          <Route path="/book-ticket/:busId" element={<BookTicket />} /> {/* ✅ Added route */}
+          <Route path="/book-ticket/:busId" element={<BookTicket />} />
 
-          {/* 🔐 Admin routes */}
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/admin"
-            element={isAdmin ? <AdminPanel /> : <Navigate to="/login" replace />}
-          />
+          {/* 🛠️ Admin Panel (no login required) */}
+          <Route path="/admin" element={<AdminPanel />} />
 
           {/* 🧑‍✈️ Driver routes */}
           <Route path="/driver" element={<DriverLogin />} />
