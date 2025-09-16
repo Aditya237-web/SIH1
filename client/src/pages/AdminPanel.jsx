@@ -135,32 +135,26 @@ useEffect(() => {
 }, []);
 
   // Fetch 5+ buses across adminCities every 15s
+// Fetch GPS updates for Bus 101 and Bus 305 every 10s
 useEffect(() => {
-  const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
-
-  const fetchAdminBuses = async () => {
-    try {
-      const results = await Promise.all(
-        adminCities.map((city) =>
-          fetch(`${API_BASE}/api/buses-near/${encodeURIComponent(city)}`)
-            .then((res) => (res.ok ? res.json() : []))
-            .catch((err) => {
-              console.warn(`❌ Failed to fetch buses for ${city}:`, err);
-              return [];
-            })
-        )
-      );
-
-      console.log('✅ Admin bus data:', results);
-      setAdminBusData(results.flat());
-    } catch (err) {
-      console.error('🚨 Error fetching admin buses:', err);
-    }
+  const fetchLocations = () => {
+    Promise.all([
+      fetch('http://localhost:5000/api/location/Bus%20101').then(res => res.json()),
+      fetch('http://localhost:5000/api/location/Bus%20305').then(res => res.json())
+    ])
+      .then(([bus101, bus305]) => {
+        setBusLocations([
+          { busId: 'Bus 101', ...bus101 },
+          { busId: 'Bus 305', ...bus305 }
+        ]);
+      })
+      .catch(() => console.warn('Failed to fetch bus locations'));
   };
 
-  fetchAdminBuses();
+  fetchLocations();
+  const interval = setInterval(fetchLocations, 10000);
+  return () => clearInterval(interval);
 }, []);
-
         const combined = results.flat();
         const slice    = combined.length >= 5 ? combined.slice(0, 5) : combined;
         setAdminBuses(slice);
