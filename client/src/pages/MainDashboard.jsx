@@ -13,7 +13,7 @@ const fallbackCities = ['Modinagar', 'Meerut', 'Saharanpur', 'Ghaziabad', 'Aliga
 function MainDashboard() {
   const [locationGranted, setLocationGranted] = useState(false);
   const [manualCity, setManualCity] = useState('');
-  const [busData, setBusData] = useState([]);
+  const [busData, setBusData] = useState(null); // ✅ null for loading state
   const [searchQuery, setSearchQuery] = useState('');
   const { selectedCity, setSelectedCity } = useContext(CityContext);
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ function MainDashboard() {
 
   // 🚍 Fetch buses when city or search changes
   useEffect(() => {
-    const cityToQuery = searchQuery || selectedCity;
+    const cityToQuery = (searchQuery || selectedCity)?.toLowerCase().trim(); // ✅ normalize
     if (!cityToQuery) {
       setBusData([]);
       return;
@@ -63,7 +63,10 @@ function MainDashboard() {
 
     fetch(`${process.env.REACT_APP_API_BASE}/api/buses-near/${cityToQuery}`)
       .then((res) => res.json())
-      .then((data) => setBusData(data))
+      .then((data) => {
+        console.log('Fetched bus data:', data); // ✅ debug
+        setBusData(data);
+      })
       .catch((err) => {
         console.error('Failed to fetch buses:', err);
         setBusData([]);
@@ -77,7 +80,7 @@ function MainDashboard() {
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem' }}>
         <SearchBar onSearch={(q) => setSearchQuery(q)} />
 
-        <MapView buses={busData} />
+        <MapView buses={busData || []} />
 
         <BusInfo
           buses={busData}
