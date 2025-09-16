@@ -135,11 +135,11 @@ useEffect(() => {
 }, []);
 
   // Fetch 5+ buses across adminCities every 15s
-  useEffect(() => {
+useEffect(() => {
+  const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
+
   const fetchAdminBuses = async () => {
     try {
-      const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
-
       const results = await Promise.all(
         adminCities.map((city) =>
           fetch(`${API_BASE}/api/buses-near/${encodeURIComponent(city)}`)
@@ -152,7 +152,7 @@ useEffect(() => {
       );
 
       console.log('✅ Admin bus data:', results);
-      setAdminBusData(results.flat()); // Combine all city arrays into one
+      setAdminBusData(results.flat());
     } catch (err) {
       console.error('🚨 Error fetching admin buses:', err);
     }
