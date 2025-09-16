@@ -17,14 +17,14 @@ function Header() {
       <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>🚌ChaldiBus</div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        {/* Admin Login */}
+        {/* Admin Panel */}
         <Link to="/admin" style={{
           color: 'white',
           textDecoration: 'none',
           fontWeight: '500',
           fontSize: '1rem'
         }}>
-          Admin Login
+          Admin Panel
         </Link>
 
         {/* Driver Panel */}
