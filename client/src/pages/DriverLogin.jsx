@@ -15,7 +15,7 @@ function DriverLogin() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/driver/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE}/api/driver/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ busId, driverId, password })
@@ -24,13 +24,13 @@ function DriverLogin() {
       const data = await response.json();
 
       if (response.ok) {
-        // Store session info (optional)
         localStorage.setItem('driverSession', JSON.stringify(data));
         navigate('/driver/dashboard');
       } else {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Server error. Please try again.');
     }
   };
