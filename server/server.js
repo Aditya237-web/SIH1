@@ -3,7 +3,19 @@ const cors = require('cors');
 const { generateNearbyBuses } = require('./utils/busGenerator');
 
 const app = express();
-app.use(cors());
+
+// ✅ Allow your frontend domain
+const allowedOrigins = [
+  'https://smartbusbharat.vercel.app', // replace with your actual frontend URL
+  'http://localhost:3000'              // optional for local dev
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // 🗺️ In-memory store for driver GPS updates
