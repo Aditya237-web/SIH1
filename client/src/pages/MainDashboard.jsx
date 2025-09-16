@@ -13,7 +13,7 @@ const fallbackCities = ['Modinagar', 'Meerut', 'Saharanpur', 'Ghaziabad', 'Aliga
 function MainDashboard() {
   const [locationGranted, setLocationGranted] = useState(false);
   const [manualCity, setManualCity] = useState('');
-  const [busData, setBusData] = useState(null); // ✅ null for loading state
+  const [busData, setBusData] = useState(null); // null for loading state
   const [searchQuery, setSearchQuery] = useState('');
   const { selectedCity, setSelectedCity } = useContext(CityContext);
   const navigate = useNavigate();
@@ -24,6 +24,8 @@ function MainDashboard() {
       ({ coords }) => {
         setLocationGranted(true);
         const { latitude, longitude } = coords;
+
+        console.log('📍 Geolocation detected:', latitude, longitude);
 
         if (latitude > 30.0 && longitude > 77.5) {
           setSelectedCity('Saharanpur');
@@ -38,7 +40,7 @@ function MainDashboard() {
         }
       },
       (err) => {
-        console.warn('Location access denied:', err);
+        console.warn('⚠️ Location access denied:', err);
         setLocationGranted(false);
         setSelectedCity('Ghaziabad'); // fallback
       },
@@ -51,24 +53,37 @@ function MainDashboard() {
     const city = e.target.value;
     setManualCity(city);
     setSelectedCity(city);
+    console.log('🧭 Manual city selected:', city);
   };
 
   // 🚍 Fetch buses when city or search changes
   useEffect(() => {
-    const cityToQuery = (searchQuery || selectedCity)?.toLowerCase().trim(); // ✅ normalize
+    const cityToQuery = (searchQuery || selectedCity)?.toLowerCase().trim();
     if (!cityToQuery) {
+      console.log('⚠️ No city selected for bus fetch');
       setBusData([]);
       return;
     }
 
-    fetch(`${process.env.REACT_APP_API_BASE}/api/buses-near/${cityToQuery}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('Fetched bus data:', data); // ✅ debug
-        setBusData(data);
+    const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
+    const fetchURL = `${API_BASE}/api/buses-near/${cityToQuery}`;
+
+    console.log('🔍 Fetching buses for:', cityToQuery);
+    console.log('🔗 API URL:', fetchURL);
+
+    fetch(fetchURL)
+      .then(async (res) => {
+        try {
+          const data = await res.json();
+          console.log('✅ Bus data received:', data);
+          setBusData(data);
+        } catch (err) {
+          console.error('❌ Failed to parse JSON:', err);
+          setBusData([]);
+        }
       })
       .catch((err) => {
-        console.error('Failed to fetch buses:', err);
+        console.error('❌ Fetch error:', err);
         setBusData([]);
       });
   }, [searchQuery, selectedCity]);
