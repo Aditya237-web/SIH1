@@ -14,14 +14,19 @@ function DriverLogin() {
     e.preventDefault();
     setError('');
 
+    const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
+    const loginUrl = `${API_BASE}/api/driver/login`;
+    console.log('🔗 Login URL:', loginUrl);
+
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE}/api/driver/login`, {
+      const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ busId, driverId, password })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : {};
 
       if (response.ok) {
         localStorage.setItem('driverSession', JSON.stringify(data));
