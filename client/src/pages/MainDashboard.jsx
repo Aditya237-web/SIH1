@@ -8,23 +8,17 @@ import AdvisoryDashboard from '../components/AdvisoryDashboard';
 import Footer from '../components/Footer';
 import { CityContext } from '../App';
 
-const fallbackCities = [
-  'Modinagar',
-  'Meerut',
-  'Saharanpur',
-  'Ghaziabad',
-  'Aligarh'
-];
+const fallbackCities = ['Modinagar', 'Meerut', 'Saharanpur', 'Ghaziabad', 'Aligarh'];
 
 function MainDashboard() {
   const [locationGranted, setLocationGranted] = useState(false);
-  const [manualCity, setManualCity]           = useState('');
-  const [busData, setBusData]                 = useState([]);
-  const [searchQuery, setSearchQuery]         = useState('');
-  const { selectedCity, setSelectedCity }     = useContext(CityContext);
+  const [manualCity, setManualCity] = useState('');
+  const [busData, setBusData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { selectedCity, setSelectedCity } = useContext(CityContext);
   const navigate = useNavigate();
 
-  // 📍 Detect geolocation and pick a city
+  // 📍 Detect geolocation and auto-select city
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
@@ -53,9 +47,10 @@ function MainDashboard() {
   }, [setSelectedCity]);
 
   // 🧭 Manual city selector
-  const handleManualSelect = e => {
-    setManualCity(e.target.value);
-    setSelectedCity(e.target.value);
+  const handleManualSelect = (e) => {
+    const city = e.target.value;
+    setManualCity(city);
+    setSelectedCity(city);
   };
 
   // 🚍 Fetch buses when city or search changes
@@ -67,9 +62,9 @@ function MainDashboard() {
     }
 
     fetch(`${process.env.REACT_APP_API_BASE}/api/buses-near/${cityToQuery}`)
-      .then(res => res.json())
-      .then(data => setBusData(data))
-      .catch(err => {
+      .then((res) => res.json())
+      .then((data) => setBusData(data))
+      .catch((err) => {
         console.error('Failed to fetch buses:', err);
         setBusData([]);
       });
@@ -80,20 +75,18 @@ function MainDashboard() {
       <Header />
 
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem' }}>
-        <SearchBar onSearch={q => setSearchQuery(q)} />
+        <SearchBar onSearch={(q) => setSearchQuery(q)} />
 
         <MapView buses={busData} />
 
         <BusInfo
           buses={busData}
-          onPurchase={busId => navigate(`/book-ticket/${busId}`)}
+          onPurchase={(busId) => navigate(`/book-ticket/${busId}`)}
         />
 
         {!locationGranted && (
           <div style={{ margin: '1.5rem 0' }}>
-            <label style={{ fontWeight: 'bold' }}>
-              📍 Select your city manually:
-            </label>
+            <label style={{ fontWeight: 'bold' }}>📍 Select your city manually:</label>
             <select
               value={manualCity}
               onChange={handleManualSelect}
@@ -101,11 +94,11 @@ function MainDashboard() {
                 display: 'block',
                 padding: '0.75rem',
                 fontSize: '1rem',
-                marginTop: '0.5rem'
+                marginTop: '0.5rem',
               }}
             >
               <option value="">-- Choose a city --</option>
-              {fallbackCities.map(city => (
+              {fallbackCities.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>
@@ -114,9 +107,7 @@ function MainDashboard() {
           </div>
         )}
 
-        {selectedCity && (
-          <AdvisoryDashboard location={selectedCity} />
-        )}
+        {selectedCity && <AdvisoryDashboard location={selectedCity} />}
       </main>
 
       <Footer />
