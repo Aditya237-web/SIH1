@@ -136,15 +136,30 @@ useEffect(() => {
 
   // Fetch 5+ buses across adminCities every 15s
   useEffect(() => {
-    const fetchAdminBuses = async () => {
-      try {
-        const results = await Promise.all(
-          adminCities.map(city =>
-            const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
-            fetch(`${API_BASE}/api/buses-near/${encodeURIComponent(city)}`)
-              .then(res => (res.ok ? res.json() : []))
-          )
-        );
+  const fetchAdminBuses = async () => {
+    try {
+      const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
+
+      const results = await Promise.all(
+        adminCities.map((city) =>
+          fetch(`${API_BASE}/api/buses-near/${encodeURIComponent(city)}`)
+            .then((res) => (res.ok ? res.json() : []))
+            .catch((err) => {
+              console.warn(`❌ Failed to fetch buses for ${city}:`, err);
+              return [];
+            })
+        )
+      );
+
+      console.log('✅ Admin bus data:', results);
+      setAdminBusData(results.flat()); // Combine all city arrays into one
+    } catch (err) {
+      console.error('🚨 Error fetching admin buses:', err);
+    }
+  };
+
+  fetchAdminBuses();
+}, []);
 
         const combined = results.flat();
         const slice    = combined.length >= 5 ? combined.slice(0, 5) : combined;
