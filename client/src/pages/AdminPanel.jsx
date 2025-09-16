@@ -106,10 +106,8 @@ export default function AdminPanel() {
   useEffect(() => {
     const fetchLocations = () => {
       Promise.all([
-        const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
-
-fetch(`${API_BASE}/api/location/${encodeURIComponent('Bus 101')}`).then(res => res.json()),
-fetch(`${API_BASE}/api/location/${encodeURIComponent('Bus 305')}`).then(res => res.json())
+       fetch('https://sih1-gmzh.onrender.com/api/location/Bus%20101').then(res => res.json()),
+       fetch('https://sih1-gmzh.onrender.com/api/location/Bus%20305').then(res => res.json())
       ])
         .then(([bus101, bus305]) => {
           setBusLocations([
