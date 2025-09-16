@@ -140,7 +140,8 @@ useEffect(() => {
       try {
         const results = await Promise.all(
           adminCities.map(city =>
-            fetch(`http://localhost:5000/api/buses-near/${encodeURIComponent(city)}`)
+            const API_BASE = process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com';
+            fetch(`${API_BASE}/api/buses-near/${encodeURIComponent(city)}`)
               .then(res => (res.ok ? res.json() : []))
           )
         );
