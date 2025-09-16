@@ -30,7 +30,10 @@ function DriverDashboard() {
             setLocation({ lat: latitude, lng: longitude });
             setStatus(`📍 Location updated: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
 
-            fetch(`${process.env.REACT_APP_API_BASE}/api/location`, {
+            const apiUrl = `${process.env.REACT_APP_API_BASE || 'https://sih1-gmzh.onrender.com'}/api/location`;
+            console.log('📡 Sending location to:', apiUrl);
+
+            fetch(apiUrl, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -68,7 +71,13 @@ function DriverDashboard() {
 
         {session ? (
           <>
-            <section style={{ marginBottom: '2rem', backgroundColor: '#fff', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+            <section style={{
+              marginBottom: '2rem',
+              backgroundColor: '#fff',
+              padding: '1.5rem',
+              borderRadius: '8px',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+            }}>
               <h3 style={{ color: '#333', marginBottom: '1rem' }}>Driver Information</h3>
               <div><strong>Bus ID:</strong> {session.busId}</div>
               <div><strong>Driver ID:</strong> {session.driverId}</div>
@@ -76,7 +85,12 @@ function DriverDashboard() {
               <div style={{ marginTop: '1rem' }}><strong>Status:</strong> {status}</div>
             </section>
 
-            <section style={{ backgroundColor: '#fff', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+            <section style={{
+              backgroundColor: '#fff',
+              padding: '1.5rem',
+              borderRadius: '8px',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+            }}>
               <h3 style={{ color: '#333', marginBottom: '1rem' }}>Live Location Map</h3>
               {location.lat && location.lng ? (
                 <MapContainer center={[location.lat, location.lng]} zoom={15} style={{ height: '400px', width: '100%' }}>
