@@ -129,7 +129,7 @@ export default function AdminPanel() {
       try {
         const results = await Promise.all(
           adminCities.map(city =>
-            fetch(`http://localhost:5000/api/buses-near/${encodeURIComponent(city)}`)
+            fetch(`https://sih1-gmzh.onrender.com/api/buses-near/${encodeURIComponent(city)}`)
               .then(res => (res.ok ? res.json() : []))
           )
         );
