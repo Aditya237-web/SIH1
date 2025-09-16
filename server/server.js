@@ -6,8 +6,8 @@ const app = express();
 
 // ✅ Allow your frontend domain
 const allowedOrigins = [
-  'https://smartbusbharat.vercel.app', // replace with your actual frontend URL
-  'http://localhost:3000'              // optional for local dev
+  'https://busbyte.vercel.app',
+  'http://localhost:3000'
 ];
 
 app.use(cors({
