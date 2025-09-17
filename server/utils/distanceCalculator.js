@@ -1,11 +1,11 @@
-const cityRegistry = require('./cityRegistry');
+import cityRegistry from '../../server/utils/cityRegistry';
 
 function toRad(deg) {
   return deg * Math.PI / 180;
 }
 
 function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius in km
+  const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
 
@@ -17,14 +17,12 @@ function haversine(lat1, lon1, lat2, lon2) {
   return Math.round(R * c);
 }
 
-function getDistance(routeString) {
-  const [fromName, toName] = routeString.split(' - ').map(s => s.trim());
-  const from = cityRegistry.find(c => c.name.toLowerCase() === fromName.toLowerCase());
-  const to = cityRegistry.find(c => c.name.toLowerCase() === toName.toLowerCase());
+export function getDistance(fromCity, toCity) {
+  if (!fromCity || !toCity) return null;
+
+  const from = cityRegistry.find(c => c.name.toLowerCase() === fromCity.toLowerCase());
+  const to = cityRegistry.find(c => c.name.toLowerCase() === toCity.toLowerCase());
 
   if (!from || !to) return null;
-
   return haversine(from.lat, from.lon, to.lat, to.lon);
 }
-
-module.exports = { getDistance };
