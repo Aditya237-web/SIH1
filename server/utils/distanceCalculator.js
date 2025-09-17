@@ -1,4 +1,4 @@
-import cityRegistry from '../../server/utils/cityRegistry';
+import cityRegistry from './cityRegistry'; // assuming you move cityRegistry.js here too
 
 function toRad(deg) {
   return deg * Math.PI / 180;
