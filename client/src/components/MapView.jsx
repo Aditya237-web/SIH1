@@ -2,6 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+// ✅ Fix for missing marker icons in production (Vercel, Rollup)
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
 function MapView() {
   const mapRef = useRef(null);
 
@@ -55,12 +68,15 @@ function MapView() {
 
   return (
     <section style={{ padding: '2rem 0' }}>
-      <div id="map" style={{
-        width: '100%',
-        height: '400px',
-        border: '2px solid #002147',
-        borderRadius: '8px'
-      }}></div>
+      <div
+        id="map"
+        style={{
+          width: '100%',
+          height: '400px',
+          border: '2px solid #002147',
+          borderRadius: '8px',
+        }}
+      ></div>
     </section>
   );
 }
