@@ -71,5 +71,15 @@ module.exports = [
   { name: 'Karnal', lat: 29.69, lon: 76.99, state: 'HR' },
   { name: 'Kochi', lat: 9.93, lon: 76.27, state: 'KL' },
   { name: 'Kolhapur', lat: 16.70, lon: 74.24, state: 'MH' },
-  { name: 'Kollam', lat: 8.88, lon: 76.59, state: 'KL' }
+  { name: 'Kollam', lat: 8.88, lon: 76.59, state: 'KL' },
+  { name: 'Kollam', lat: 8.88, lon: 76.59, state: 'KL' },
+  { name: 'Bengaluru', lat: 12.97, lon: 77.59, state: 'KA' },
+  { name: 'Delhi', lat: 28.61, lon: 77.23, state: 'DL' },
+  { name: 'Chennai', lat: 13.08, lon: 80.27, state: 'TN' },
+  { name: 'Hyderabad', lat: 17.38, lon: 78.48, state: 'TG' },
+  { name: 'Kolkata', lat: 22.57, lon: 88.36, state: 'WB' },
+  { name: 'Mumbai', lat: 19.07, lon: 72.88, state: 'MH' },
+  { name: 'Pune', lat: 18.52, lon: 73.85, state: 'MH' },
+  { name: 'Ahmedabad', lat: 23.03, lon: 72.57, state: 'GJ' }
+
 ];
