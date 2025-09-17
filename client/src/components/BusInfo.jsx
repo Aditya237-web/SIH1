@@ -1,33 +1,34 @@
+// src/components/BusInfo.jsx
+
 import React from 'react';
-import { getDistance } from '../utils/distanceCalculator';
 
 export default function BusInfo({ buses, onPurchase }) {
   const hasBuses = Array.isArray(buses) && buses.length > 0;
 
   return (
     <section style={{ padding: '2rem 0' }}>
-      <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>🚌 Live Bus Info</h2>
+      <h2>Live Bus Info</h2>
 
       {!hasBuses && (
-        <div style={{
-          backgroundColor: '#fff',
-          padding: '1rem',
-          borderLeft: '5px solid #ccc',
-          color: '#666',
-          borderRadius: '4px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
+        <div
+          style={{
+            backgroundColor: '#fff',
+            padding: '1rem',
+            borderLeft: '5px solid #ccc',
+            color: '#666',
+            borderRadius: '4px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}
+        >
           No live buses in this city right now.
         </div>
       )}
 
       {hasBuses &&
-        buses.map((bus) => {
-          const [from, to] = bus.route?.split(' - ')?.map(s => s.trim()) || [];
-          const distance = getDistance(from, to);
-
-          return (
-            <div key={bus.busId} style={{
+        buses.map((bus) => (
+          <div
+            key={bus.busId}
+            style={{
               position: 'relative',
               backgroundColor: '#fff',
               padding: '1rem',
@@ -37,9 +38,11 @@ export default function BusInfo({ buses, onPurchase }) {
               borderRadius: '4px',
               display: 'flex',
               flexDirection: 'column'
-            }}>
-              {/* Bus Type Badge */}
-              <span style={{
+            }}
+          >
+            {/* Bus Type Badge in the top-right corner */}
+            <span
+              style={{
                 position: 'absolute',
                 top: '0.75rem',
                 right: '0.75rem',
@@ -48,40 +51,42 @@ export default function BusInfo({ buses, onPurchase }) {
                 borderRadius: '3px',
                 fontSize: '0.75rem',
                 color: '#333'
-              }}>
-                {bus.busType}
-              </span>
+              }}
+            >
+              {bus.busType}
+            </span>
 
-              <p><strong>Bus ID:</strong> {bus.busId}</p>
-              <p><strong>Route:</strong> {bus.route}</p>
-              <p>
-                <strong>Status:</strong> {bus.status} &nbsp;|&nbsp;
-                <strong>Crowd:</strong> {bus.crowdLevel} &nbsp;|&nbsp;
-                <strong>ETA:</strong> {bus.eta}
-              </p>
-              {distance !== null && (
-                <p><strong>Distance:</strong> {distance} km</p>
-              )}
+            <p>
+              <strong>Bus ID:</strong> {bus.busId}
+            </p>
+            <p>
+              <strong>Route:</strong> {bus.route}
+            </p>
+            <p>
+              <strong>Status:</strong> {bus.status} &nbsp;|&nbsp;
+              <strong>Crowd:</strong> {bus.crowdLevel} &nbsp;|&nbsp;
+              <strong>ETA:</strong> {bus.eta}
+            </p>
 
-              <button
-                onClick={() => onPurchase(bus.busId)}
-                style={{
-                  marginTop: '1rem',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  color: '#fff',
-                  backgroundColor: '#007BFF',
-                  border: 'none',
-                  borderRadius: '4px',
-                  alignSelf: 'flex-end',
-                  cursor: 'pointer'
-                }}
-              >
-                Purchase Ticket
-              </button>
-            </div>
-          );
-        })}
+            {/* Purchase Ticket Button */}
+            <button
+              onClick={() => onPurchase(bus.busId)}
+              style={{
+                marginTop: '1rem',
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                color: '#fff',
+                backgroundColor: '#007BFF',
+                border: 'none',
+                borderRadius: '4px',
+                alignSelf: 'flex-end',
+                cursor: 'pointer'
+              }}
+            >
+              Purchase Ticket
+            </button>
+          </div>
+        ))}
     </section>
   );
 }
